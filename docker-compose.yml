@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+        mariadb:
+                container_name: investar_mariadb
+                image: mariadb:11.3-rc
+                init: true
+                restart: always
+                command:
+                        - --default-authentication-plugin=mysql_native_password
+                        - --character-set-server=utf8mb4
+                        - --collation-server=utf8mb4_unicode_ci
+                        - --lower_case_table_names=1
+                ports:
+                        - 3376:3306
+                environment:
+                    ### [CAUTION] DB 접속 정보를 본인 환경에 맞게 변경 ###
+                        TZ: Asia/Seoul
+                        MYSQL_HOST: 127.0.0.1
+                        MYSQL_PORT: 3306
+                        MYSQL_ROOT_PASSWORD: myPa$$word
+                        MYSQL_DATABASE: investar
+                        MYSQL_USER: admin
+                        MYSQL_PASSWORD: myPa$$word
+                volumes:
+                        - ./data:/var/lib/mysql
+                        - ./init/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+
+        python:
+                container_name: investar_python
+                build:
+                        context: .
+                        dockerfile: ./Dockerfile
+                stdin_open: true
+                tty: true
+                restart: always
+                volumes:
+                        - type: bind
+                          source: ./script
+                          target: /script
+                          read_only: false
+
