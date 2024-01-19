@@ -31,8 +31,9 @@
 <br/>
 
 ## 폴더 구조
-| data/ | Docker 인스턴스 안에 생성되어 외부와 Mount 되는 DB 폴더 |
+|  | 설명 |
 | --- | --- |
+| data/ | Docker 인스턴스 안에 생성되어 외부와 Mount 되는 DB 폴더 |
 | init/ | Docker 인스턴스 실행 시 수행되는 DB 테이블 생성 SQL 과 Python 설치 패키지 목록 |
 | script/ | 웹 스크래핑과 DB에 데이터를 업데이트하는 Python 코드 |
 | Dockerfile | Python Docker 이미지를 만드는 설정 파일 |
